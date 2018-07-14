@@ -38,7 +38,7 @@
                                             <a name="Eliminar" id="{{base64_encode($doc->id)}}'"
                                                class="btn btn-sm btn-danger pull-right delete"><i
                                                         class="voyager-trash"></i><span>Borrar</span></a>
-                                            <a href="/Docente/editarCompetencias/{{base64_encode($doc->dasg_id)}}"
+                                            <a href="/Docente/editarCompetencias/{{base64_encode($doc->dasg_id)}}/{{base64_encode($doc->id)}}"
                                                title="definirContenido"
                                                class="btn btn-sm btn-primary pull-right edit" id="{{$doc->dasg_id}}"><i
                                                         class="voyager-edit"></i> <span>Editar Competencias</span></a>

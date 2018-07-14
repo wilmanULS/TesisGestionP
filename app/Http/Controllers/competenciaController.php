@@ -80,7 +80,7 @@ class competenciaController extends Controller
             $consulta_docentes = DB::table('t_docente_asignaturas as d')
                 ->join('users', 'users.id', '=', 'd.user_id')
                 ->join('t_cat_asignatura', 't_cat_asignatura.as_id', '=', 'd.asig_id')
-                ->select('d.dasg_id', 'users.name', 't_cat_asignatura.as_nombre','t_cat_asignatura.as_id', 't_cat_asignatura.as_nivel', 't_cat_asignatura.as_antecesor', 'd.user_id')
+                ->select('d.dasg_id', 'users.name', 't_cat_asignatura.as_nombre', 't_cat_asignatura.as_id', 't_cat_asignatura.as_nivel', 't_cat_asignatura.as_antecesor', 'd.user_id')
                 ->where('user_id', '=', '' . $userId . '')
                 //campo del fltro, comando SQL, texto a buscar
                 ->orderBy('d.dasg_id', 'desc')
@@ -107,10 +107,11 @@ class competenciaController extends Controller
 
 
     public
-    function editCompetencias($id)
+    function editCompetencias($id, $idComp)
     {
 
         $idM = base64_decode($id);
+        $idComp = base64_decode($idComp);
 
         $asignatura = DB::table('t_docente_asignaturas as d')
             ->join('t_cat_asignatura', 't_cat_asignatura.as_id', '=', 'd.asig_id')
@@ -128,16 +129,29 @@ class competenciaController extends Controller
             ->join('nivelcognoscitivo', 'nivelcognoscitivo.id', '=', 'taxonomia_blooms.id_nc')
             ->join('asignatura_horas', 'asignatura_horas.id', '=', 'c.id_horas')
             ->select('c.id', 'c.descripcion', 'c.id_tax', 'c.id_horas',
-                'taxonomia_blooms.verbo', 'nivelcognoscitivo.dificultad', 'asignatura_horas.horasPracticas',
+                'taxonomia_blooms.verbo', 'taxonomia_blooms.id_nc', 'nivelcognoscitivo.dificultad', 'nivelcognoscitivo.descripcion as descripcionNC', 'asignatura_horas.horasPracticas',
                 'asignatura_horas.horasTeoricas', 'asignatura_horas.horasLaboratorio', 'asignatura_horas.dasg_id')
-            ->where('asignatura_horas.dasg_id', '=', '' . $idM . '')
+            ->where('c.id', '=', '' . $idComp . '')
             ->get();
 
+        $array = json_decode(json_encode($mostrarCompetencias), true);
+        $data = $array[0];
+        $idNC = $data['id_nc'];
+        $idTax = $data['id_tax'];
+        $idHoras = $data['id_horas'];
+        $dif = $data['dificultad'];
+        $nivelDes = $data['descripcion'];
+        $desComp = $data['descripcionNC'];
+        $horasT = $data['horasTeoricas'];
+        $horasL = $data['horasLaboratorio'];
+        $horasP = $data['horasPracticas'];
 
-        return view('Docente.editarCompetencias', ["mostrarCompetencias" => $mostrarCompetencias, "dificultad" => $dificultad, "asignatura" => $asignatura, "idA" => $idM]);
+
+        return view('Docente.editarCompetencias', ["dificultad" => $dificultad, "asignatura" => $asignatura, "idA" => $idM,
+            "dificult" => $dif, "descNivel" => $nivelDes, "idNC" => $idNC, "idTax" => $idTax, "desComp" => $desComp,
+            "horasT" => $horasT, "horasL" => $horasL, "horasP" => $horasP, "idHoras" => $idHoras, "idComp" => $idComp]);
 
 
     }
-
 
 }
