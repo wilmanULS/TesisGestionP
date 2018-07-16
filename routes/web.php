@@ -35,11 +35,11 @@ Route::get('/Materia/descripcion/','AsignaturasController@getNombre')->name('Mat
 Route::post('/create/asignaturas/save','docenteAsignaturaController@saveDocAsigDB');
 Route::post('/contenido/save','competenciaController@saveContenido')->name('Competencias.save');
 Route::get('/Docente/competencias','docenteController@tablaCompetencias');
-Route::get('/Docente/competencias/AgregarContenido','competenciaController@viewCompetencias');
+Route::get('/Docente/index/AgregarContenido','competenciaController@viewCompetencias');
 Route::get('/Docente/competencias/delete','competenciaController@deleteCompetencia')->name('Competencias.delete');
 //ruta edit ajax
 
-Route::post('/Academico/edit/update','UserController@actualizar')->name('Academico.update');
+Route::get('/Academico/edit/update','UserController@actualizar')->name('Academico.update');
 Route::get('/Asignatura/delete','docenteAsignaturaController@delete')->name('Asignatura.delete');
 Route::get('Docente/funciones/contenido/{idM}','docenteController@definirContenido')->name('Docente.Fcontenido');
 
@@ -54,7 +54,7 @@ Route::get('semanas/semana1/{id}','planController@ingresarContenido')->name('Doc
 
 Route::post('Docente/contenido/save','planController@savePlan')->name('Docente.contenidoSave');
 
-
+//crudAsignaturas
 Route::get('/admin/indexAsignaturas','AsignaturasController@index')->name('Administrador.indexAsignatura');
 Route::get('/admin/indexAsignaturas/create','AsignaturasController@create')->name('Administrador.createAsignatura');
 Route::post('/admin/indexAsignaturas/create/save','AsignaturasController@saveAsignatura')->name('Administrador.saveAsignatura');
@@ -67,7 +67,6 @@ Route::get('/Docente/Indextemas/ingresarOA','planController@indexTemas');
 Route::get('/Docente/verTemas/temas/{id}','planController@getTemas');
 Route::get('/Docente/verTemas/','planController@getContenido')->name('Docente.temas');
 Route::get('/Docente/verTemas/view','planController@getAllTemas')->name('Docente.verTemas');
-
 
 Route::resource('Academico/designarAsignatura','docenteAsignaturaController');
 Route::resource('/create','UserController');

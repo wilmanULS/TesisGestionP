@@ -1,13 +1,13 @@
 @extends('backpack::layout')
-@section('page_header')
-    <h1 class="page-title">
-        <i class="voyager-documentation"></i>Mis Asignaturas
+@section('header')
+    <h1 class="content-header">
+        <i class=""></i>Mis Asignaturas
     </h1>
 @stop
 
 @section('content')
     <div class="page-content container-fluid">
-        @include('voyager::alerts')
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">

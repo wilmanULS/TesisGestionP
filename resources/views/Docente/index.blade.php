@@ -1,14 +1,14 @@
 @extends('backpack::layout')
-
+@section('header')
 @section('header')
     <h1 class="content-header">
-        <i class="fa fa-cog"></i> Mis Asignaturas
+        <i class=""></i>Mis Asignaturas
     </h1>
-@endsection
+@stop
 
 @section('content')
     <div class="page-content container-fluid">
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
@@ -36,9 +36,9 @@
                                         <td>{{$doc->as_nivel}}</td>
 
                                         <td>
-                                            <a href="funciones/contenido/{{base64_encode($doc->dasg_id)}}" title="definirContenido"
-                                               class="btn btn-xs btn-default" id="{{$doc->dasg_id}}"><i
-                                                        class="fa fa-edit"></i> <span>Registrar Horas y Competencias</span></a>
+                                            <a href="/Docente/verSemanas/{{base64_encode($doc->as_id)}}" title="definirContenido"
+                                               class="btn btn-sm btn-primary pull-right edit" id="{{$doc->as_id}}"><i
+                                                        class="voyager-edit"></i> <span>Ver Semanas</span></a>
 
                                         </td>
                                     </tr>
@@ -57,14 +57,33 @@
             </div>
         </div>
     </div>
-@endsection
+@stop
 @section('scripts')
     <script>
+
+
+        {{--$(".edit").on('click', function () {--}}
+        {{--var id = $(this).attr('id');--}}
+        {{--console.log(id);--}}
+        {{--$.ajax({--}}
+        {{--url: "{{route('Docente.Fcontenido')}}",--}}
+        {{--method: "get",--}}
+        {{--data: {--}}
+        {{--idM: id--}}
+        {{--}, success: function (msg) {--}}
+        {{--alert("Se ha realizado el POST con exito " );--}}
+        {{--location.href = '/Docente/funciones/contenido';--}}
+        {{--}--}}
+        {{--});--}}
+
+        {{--});--}}
+
+
 
     </script>
 
 
-@endsection
+@stop
 
 
 

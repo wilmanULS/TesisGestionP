@@ -27,7 +27,7 @@
                                     <th>Docentes</th>
                                     <th>Asignatura</th>
                                     <th>Nivel</th>
-                                    <th>Asignatura Antecesora</th>
+
                                     <th>Acciones de la tabla</th>
                                 </tr>
                                 </thead>
@@ -37,12 +37,12 @@
                                         <td>{{$doc->name}}</td>
                                         <td>{{$doc->as_nombre}}</td>
                                         <td>{{$doc->as_nivel}}</td>
-                                        <td>{{$doc->as_antecesor}}</td>
+
                                         <td>
                                             <a name="Eliminar" id="{{$doc->dasg_id}}'"
                                                class="btn btn-sm btn-danger pull-right delete"><i
                                                         class="voyager-trash"></i><span>Borrar</span></a>
-                                            <a href="edit/{{$doc->dasg_id}}" title="Editar"
+                                            <a href="/Academico/edit/{{$doc->dasg_id}}" title="Editar"
                                                class="btn btn-sm btn-primary pull-right edit"><i
                                                         class="voyager-edit"></i> <span>Editar</span></a>
 

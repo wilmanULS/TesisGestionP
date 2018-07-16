@@ -13,5 +13,10 @@ Route::group([
 ], function () {
 
     CRUD::resource('Periodo','PeriodoCrudController');
+    CRUD::resource('Formato','FormatoCrudController');
+    CRUD::resource('Recurso','recursoEducativoCrudController');
+    CRUD::resource('Idioma','IdiomaCrudController');
+    CRUD::resource('Dificultad','DificultadCrudController');
+    CRUD::resource('Nivel','nivelCognoscitivoCrudController');
     // custom admin routes
 }); // this should be the absolute last line of this file

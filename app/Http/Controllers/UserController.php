@@ -62,10 +62,26 @@ class UserController extends Controller
     {
 
 
-        $catDocentes = DB::table('users')
-            ->select('users.role_id', 'users.name', 'users.id')
-            ->where('role_id', '=', '3')
+        $idDocentes=DB::table('model_has_roles')
+            ->select('model_id')
+            ->where('role_id','=','2')
+            ->distinct()
             ->get();
+
+        $arrayLista = json_decode($idDocentes);
+
+
+        for($i=0; $i<count($arrayLista); $i++) {
+
+            $catDocentes = DB::table('users')
+                ->select('id', 'name')
+                ->where('id', '=', '' . $arrayLista[$i]->model_id . '')
+                ->distinct()
+                ->get();
+            $arrayName=json_decode(json_encode($catDocentes),true);
+            $catalagoDocentes[]=$arrayName[0];
+
+        }
 
         $nivel = DB::table('t_cat_asignatura')
             ->select('t_cat_asignatura.as_nivel')
@@ -74,7 +90,7 @@ class UserController extends Controller
 
         $busqueda = TDocenteAsignatura::findOrFail($id);
 
-        return view("Academico.edit", ["catDocentes" => $catDocentes, "nivel" => $nivel, "busqueda" => $busqueda]);
+        return view("Academico.edit", ["catDocentes" => $catalagoDocentes, "nivel" => $nivel, "busqueda" => $busqueda]);
     }
 
     public function actualizar(Request $request) // modifica por GET

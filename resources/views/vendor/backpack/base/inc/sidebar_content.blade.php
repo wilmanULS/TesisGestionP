@@ -22,10 +22,16 @@
     </ul>
   </li>
 
-  <li><a href="{{ backpack_url('Periodo') }}"><i class="fa fa-tag"></i> <span>Peridos Académicos</span></a></li>
-
-
+  <li><a href="{{ backpack_url('Periodo') }}"><i class="fa fa-calendar-check-o"></i> <span>Peridos Académicos</span></a></li>
+  <li><a href="{{ backpack_url('Formato') }}"><i class="fa fa-bookmark"></i> <span>Formatos Objeto Aprendizaje</span></a></li>
+  <li><a href="{{ backpack_url('Recurso') }}"><i class="fa fa-tag"></i> <span>Tipo Recurso Educativo</span></a></li>
+  <li><a href="{{ backpack_url('Idioma') }}"><i class="fa fa-wechat"></i> <span>Idiomas Objeto Aprendizaje</span></a></li>
+  <li><a href="{{ backpack_url('Dificultad') }}"><i class="fa fa-adn"></i> <span>Dificultad Objeto Aprendizaje</span></a></li>
+  <li><a href="{{ backpack_url('Nivel') }}"><i class="fa fa-address-book"></i> <span>Nivel Cognoscitivo</span></a></li>
   @endcan
+@can('Asignaturas')
+
+@endcan
 
 
   <!-- DOCENTE MENÚ-->
@@ -40,7 +46,7 @@
   <li class="treeview">
     <a href="#"><i class="fa fa-bookmark"></i> <span>Contenido & Temas</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
-      <li><a href="{{ url('/Docente/competencias/AgregarContenido') }}"><i class="fa fa-calendar"></i> <span>Semanas</span></a></li>
+      <li><a href="{{ url('/Docente/index/AgregarContenido') }}"><i class="fa fa-calendar"></i> <span>Semanas</span></a></li>
     </ul>
   </li>
 

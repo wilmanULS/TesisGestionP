@@ -24,7 +24,7 @@ class competenciaController extends Controller
         $dificultad = $request->get('dificultad');
 
         $data = DB::table('nivelcognoscitivo')
-            ->select('nivelcognoscitivo.descripcion', 'nivelcognoscitivo.id')
+            ->select('nivelcognoscitivo.descripcion as descripcionNC', 'nivelcognoscitivo.id')
             ->where('nivelcognoscitivo.dificultad', '=', '' . $dificultad . '')
             ->get();
 
@@ -87,7 +87,7 @@ class competenciaController extends Controller
                 ->paginate(7);
 
 
-            return view('Docente.editarCompetencias', ["consulta_docentes" => $consulta_docentes]);
+            return view('Docente.index', ["consulta_docentes" => $consulta_docentes]);
         }
     }
 
@@ -140,8 +140,8 @@ class competenciaController extends Controller
         $idTax = $data['id_tax'];
         $idHoras = $data['id_horas'];
         $dif = $data['dificultad'];
-        $nivelDes = $data['descripcion'];
-        $desComp = $data['descripcionNC'];
+        $nivelDes = $data['descripcionNC'];
+        $desComp = $data['descripcion'];
         $horasT = $data['horasTeoricas'];
         $horasL = $data['horasLaboratorio'];
         $horasP = $data['horasPracticas'];

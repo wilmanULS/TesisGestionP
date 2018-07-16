@@ -187,7 +187,7 @@
                         //console.log(data.length);
                         $('#nivelC').empty();
                         for (var i = 0; i < data.length; i++) {
-                            $('#nivelC').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
+                            $('#nivelC').append('<option value="' + data[i].id + '">' + data[i].descripcionNC + '</option>');
 
                         }
 
@@ -284,7 +284,7 @@
                             //console.log(data.length);
                             $('#nivelC' + id + '').empty();
                             for (var i = 0; i < data.length; i++) {
-                                $('#nivelC' + id + '').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
+                                $('#nivelC' + id + '').append('<option value="' + data[i].id + '">' + data[i].descripcionNC + '</option>');
                             }
                         }
                     });
