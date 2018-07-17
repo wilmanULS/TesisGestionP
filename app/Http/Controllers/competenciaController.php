@@ -36,38 +36,86 @@ class competenciaController extends Controller
 
 
         if ($request->isMethod('post')) {
-
-
+            $userId = Auth::user()->getAuthIdentifier();
+            $mgs = array();
             $horaP = $request->input('horasP');
             $horaT = $request->input('horasT');
             $horaL = $request->input('horasL');
             $idDasg = $request->input('idDasg');
 
             $addDA = DB::table('asignatura_horas')->insert([
-                'horasPracticas' => $horaP,
-                'horasTeoricas' => $horaT,
-                'horasLaboratorio' => $horaL,
-                'dasg_id' => $idDasg,
-            ]);
-            /////
-            $idAsig = DB::table('asignatura_horas')->max('id');
+                 'horasPracticas' => $horaP,
+                 'horasTeoricas' => $horaT,
+                 'horasLaboratorio' => $horaL,
+                 'dasg_id' => $idDasg,
+             ]);
+
+             $idAsig = DB::table('asignatura_horas')->max('id');
 
             $competencias = $request->input('competencias');
             $arrayC = json_decode($competencias);
             $tax = $arrayC->taxo;
             $comp = $arrayC->comp;
-            for ($i = 0; $i < count($tax); $i++) {
-                $taxId = $tax[$i];
-                $compDes = $comp[$i];
-                if ($taxId != "" && $compDes != "") {
-                    $addDA = DB::table('competencias')->insert([
-                        'id_tax' => $taxId,
-                        'descripcion' => $compDes,
-                        'id_horas' => $idAsig
-                    ]);
+
+            $verificar = DB::table('asignatura_horas as h')
+                ->join('competencias', 'competencias.id_horas', '=', 'h.id')
+                ->join('t_docente_asignaturas', 't_docente_asignaturas.dasg_id', '=', 'h.dasg_id')
+                ->join('users', 'users.id', '=', 't_docente_asignaturas.user_id')
+                ->select('competencias.descripcion')
+                ->where('user_id', '=', '' . $userId . '')
+                ->count();
+
+            if ($verificar == 5) {
+
+                echo "Completo";
+
+            } else {
+                if ($verificar < 5) {
+                    $competencia = $this->contarCompetencias($comp);
+                    $faltan = 5 - $verificar;
+                    if ($competencia > $faltan) {
+                        $mgs['mgs']="exceso";
+                        $mgs['valor']=$faltan;
+                        echo json_encode($mgs);
+                    } else {
+                        for ($i = 0; $i < count($tax); $i++) {
+                            $taxId = $tax[$i];
+                            $compDes = $comp[$i];
+                            if ($taxId != "" && $compDes != "") {
+                                $addDA = DB::table('competencias')->insert([
+                                    'id_tax' => $taxId,
+                                    'descripcion' => $compDes,
+                                    'id_horas' => $idAsig
+                                ]);
+
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+
+    public function esNegativo($numero)
+    {
+        if ($numero < 0) {
+            echo true;
+        } elseif ($numero > 0) {
+            echo false;
+        } else {
+            echo 0;
+        }
+    }
+
+    public function contarCompetencias($comp)
+    {
+        $count = 0;
+        for ($i = 0; $i < count($comp); $i++) {
+            if ($comp[$i] != "") {
+                $count++;
+            }
+        }
+        return $count;
     }
 
     public function viewCompetencias(Request $request)
@@ -106,8 +154,7 @@ class competenciaController extends Controller
     }
 
 
-    public
-    function editCompetencias($id, $idComp)
+    public function editCompetencias($id, $idComp)
     {
 
         $idM = base64_decode($id);

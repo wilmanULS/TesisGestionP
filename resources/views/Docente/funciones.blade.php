@@ -395,15 +395,23 @@
                     token: token,
                     competencias: Comp,
 
-                }, success: function (msg) {
+                }, success: function (data) {
+                var val=JSON.parse(data);
+                if(val.mgs==="exceso")
+                {
+                    alert("Solo puede agregar"+val.valor+" competencia (Elimine algunas)");
+                }else {
                     alert("Se ha realizado el POST con exito ");
                     location.href = '/Docente/competencias';
                 }
+
+
+            }
             });
 
         });
         //
     });
-</script>
+</script>loca
 @endsection
 
