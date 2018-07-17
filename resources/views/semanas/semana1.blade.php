@@ -17,7 +17,11 @@
 
     @if(empty($contenidos) || $stateNew==true)
         <div class="page-content container-fluid">
-
+            @if(Session::has('user_message'))
+                <div class="alert ui-pnotify-container alert-success ui-pnotify-shadow" role="alert" style='min-height: 16px;'>
+                    {{ Session::get('user_message') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-bordered">
@@ -92,7 +96,12 @@
         </div>
     @else
         <div class="page-content container-fluid">
-
+            @if(Session::has('user_message'))
+                <div class="alert ui-pnotify-container alert-success ui-pnotify-shadow" role="alert" style='min-height: 16px;'>
+                    {{ Session::get('user_message') }}
+                </div>
+            @endif
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-bordered">
