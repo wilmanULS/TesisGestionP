@@ -61,7 +61,11 @@
 
 @endcan
 
+@can('Planificacion Curso')
 
+  <li><a href="{{ url('/Docente/planificacionCurso/temas') }}"><i class="fa fa-archive"></i> <span>Planificación Curso</span></a></li>
+
+@endcan
 
 
 

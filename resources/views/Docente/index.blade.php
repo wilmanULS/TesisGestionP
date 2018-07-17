@@ -1,10 +1,10 @@
 @extends('backpack::layout')
-@section('header')
+
 @section('header')
     <h1 class="content-header">
         <i class=""></i>Mis Asignaturas
     </h1>
-@stop
+@endsection
 
 @section('content')
     <div class="page-content container-fluid">
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 @section('scripts')
     <script>
 
@@ -83,7 +83,7 @@
     </script>
 
 
-@stop
+@endsection
 
 
 

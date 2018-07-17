@@ -1,5 +1,5 @@
 @extends('backpack::layout')
-@section('page_header')
+@section('header')
     <h1 class="content-header">
         <i class=""></i>
         Ingresar Objetos Aprendizaje

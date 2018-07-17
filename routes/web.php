@@ -68,6 +68,13 @@ Route::get('/Docente/verTemas/temas/{id}','planController@getTemas');
 Route::get('/Docente/verTemas/','planController@getContenido')->name('Docente.temas');
 Route::get('/Docente/verTemas/view','planController@getAllTemas')->name('Docente.verTemas');
 
+//routes planificacion
+
+Route::get('/Docente/planificacionCurso/temas','planController@vistaPlanificacionCurso');
+Route::get('/Docente/planificacionCurso/','planController@getContenido')->name('Docente.PlanCurso');
+Route::get('/Docente/planificacionCurso/view','planController@getAllTemas')->name('Docente.verPlanCurso');
+
+
 Route::resource('Academico/designarAsignatura','docenteAsignaturaController');
 Route::resource('/create','UserController');
 //DOCENTE

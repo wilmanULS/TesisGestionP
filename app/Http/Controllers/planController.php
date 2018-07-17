@@ -80,6 +80,11 @@ class planController extends Controller
 
         return view('Docente.verTemas');
     }
+    public function vistaPlanificacionCurso(){
+
+
+        return view('Docente.planificacionCurso');
+    }
 
     public function getContenido(Request $request){
 
