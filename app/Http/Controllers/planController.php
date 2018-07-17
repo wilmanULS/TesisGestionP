@@ -42,8 +42,8 @@ class planController extends Controller
                 $stateNew=false;
                 if(($index+1)>count($indexs)){
                     $index=0;
-                    Session::now('message', 'Límite de horas para la semana alcanzado, no puede ingresar nuevo contenido por el momento');
-                    Session::now('alert-class', 'alert-danger');
+                    Session::now('user_message', 'Límite de horas para la semana alcanzado, no puede ingresar nuevo contenido por el momento');
+                    Session::now('alert ui-pnotify-container alert-success ui-pnotify-shadow', 'alert');
                 }
 
             }
