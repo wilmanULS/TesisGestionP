@@ -395,15 +395,23 @@
                     token: token,
                     competencias: Comp,
 
-                }, success: function (msg) {
-                    alert("Se ha realizado el POST con exito ");
-                    location.href = '/Docente/competencias';
+                }, success: function (data) {
+                var val=JSON.parse(data);
+                if(val.mgs==="exceso")
+                {
+                    alert("Solo puede agregar"+val.valor+" competencia (Elimine algunas)");
+                }else {
+                    alert("Se ha realizado el POST con exito ");//falta el preguntar
+
+                    location.href = '/Docente/Indextemas/ingresarOA';
                 }
+
+            }
             });
 
         });
         //
     });
-</script>
+</script>loca
 @endsection
 
