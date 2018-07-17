@@ -401,10 +401,10 @@
                 {
                     alert("Solo puede agregar"+val.valor+" competencia (Elimine algunas)");
                 }else {
-                    alert("Se ha realizado el POST con exito ");
-                    location.href = '/Docente/competencias';
-                }
+                    alert("Se ha realizado el POST con exito ");//falta el preguntar
 
+                    location.href = '/Docente/Indextemas/ingresarOA';
+                }
 
             }
             });
