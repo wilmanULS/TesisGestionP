@@ -85,7 +85,7 @@
                 <br>
                 <div class="form-group col-md-8">
                     <label for="name">Tamaño *</label>
-                    <input required type="text" class="form-control required"
+                    <input required type="number" class="form-control required"
                            placeholder="Ingrese Título" id="tamaño">
                 </div>
 
@@ -223,43 +223,43 @@
         var tipoRecurso = $('#recursoEdu').val();
         var formato = $('#formato').val();
         var evalDocente = $('#evaluacion').val();
-        var url1 = $('#url1');
-        var archivo=url1[0].files;
+      //  var url1 = $('#url1');
+       // var archivo=url1[0].files;
+
+        var paqueteDeDatos = new FormData();
+        paqueteDeDatos.append('file1', $('#url1')[0].files[0]);
+        paqueteDeDatos.append('idTema', idTema);
+        paqueteDeDatos.append('titulo', titulo);
+        paqueteDeDatos.append('descripcion', descripcion);
+        paqueteDeDatos.append('autor1', autor1);
+        paqueteDeDatos.append('autor2', autor2);
+        paqueteDeDatos.append('autor3', autor3);
+        paqueteDeDatos.append('keyword1', keyword1);
+        paqueteDeDatos.append('keyword2', keyword2);
+        paqueteDeDatos.append('keyword3', keyword3);
+        paqueteDeDatos.append('keyword4', keyword4);
+        paqueteDeDatos.append('keyword5', keyword5);
+        paqueteDeDatos.append('tamanio', tamanio);
+        paqueteDeDatos.append('descripcionT', descripcionT);
+        paqueteDeDatos.append('dificultad', dificultad);
+        paqueteDeDatos.append('idioma', idioma);
+        paqueteDeDatos.append('tipoRecurso', tipoRecurso);
+        paqueteDeDatos.append('formato', formato);
+        paqueteDeDatos.append('evalDocente', evalDocente);
 
         $.ajax({
             type:"post",
             url:"{{ route('Repositorio.saveOA')  }}",
-            data:{
-                idTema:idTema,
-                 titulo:titulo,
-         descripcion:descripcion,
-         autor1: autor1,
-         autor2: autor2,
-         autor3: autor3,
-         keyword1:keyword1,
-         keyword2: keyword2,
-         keyword3: keyword3,
-         keyword4: keyword4,
-         keyword5: keyword5,
-         tamanio:  tamanio,
-         descripcionT:descripcionT,
-         dificultad:dificultad,
-         idioma:idioma,
-         tipoRecurso:tipoRecurso,
-         formato:formato,
-         evalDocente:evalDocente,
-         url1:url1,
-
-            },success: function (msg) {
+            contentType: false,
+            data: paqueteDeDatos, // Al atributo data se le asigna el objeto FormData.
+            processData: false,
+            cache: false
+            ,success: function (msg) {
                 alert("Se ha realizado el POST con exito ");
+                location.href="";
 
             }
-
-
         });
-
-
-
     });
 
 
