@@ -92,14 +92,32 @@ class ObjetoController extends Controller
             $formato = $request->input('formato');
             $evalDocente = $request->input('evalDocente');
             $url1 = $request->file('file1');
-
-            $file_name = $url1->getClientOriginalName();
+            $url2 = $request->file('file2');
+            $url3 = $request->file('file3');
+            $url4 = $request->file('file4');
+            $url5 = $request->file('file5');
+            $url6 = $request->file('file6');
+            $url7 = $request->file('file7');
+            $url8 = $request->file('file8');
+            $url9 = $request->file('file9');
+            $url10 = $request->file('file10');
+            $filesVector = [$url1, $url2, $url3, $url4, $url5, $url6, $url7, $url8, $url9, $url10];
 
             $path = "\app\ ";
             $npath = trim($path);
-            Storage::disk('local')->put($file_name, File::get($url1));
             $public_path = storage_path();
-            $url = $public_path .$npath. $file_name;
+
+            for ($i = 0; $i < count($filesVector); $i++) {
+                if ($filesVector[$i] != null) {
+                    $files_name[] = $filesVector[$i]->getClientOriginalName();
+                }
+            }
+
+            for ($i = 0; $i < count($files_name); $i++) {
+                Storage::disk('local')->put($files_name[$i], File::get($filesVector[$i]));
+
+                $urls[] = $public_path . $npath . $files_name[$i];
+            }
 
 
             $saveKeywords = DB::table('keywords')
@@ -122,16 +140,9 @@ class ObjetoController extends Controller
 
             $idDescripcionT = DB::table('descripcion_tecnica')->max('id');
 
-            $saveMetadato = DB::table('metadatos')
-                ->insert([
-                    'ruta' => $url,
-                ]);
-
-            $idMetadato = DB::table('metadatos')->max('id');
 
             $saveObjeto = DB::table('objetos_aprendizaje')
                 ->insert([
-
                     'titulo' => $titulo,
                     'descripcion' => $descripcionG,
                     'autor1' => $autor1,
@@ -146,8 +157,17 @@ class ObjetoController extends Controller
                     'id_idioma' => $idioma,
                     'cf_id' => $formato,
                     'tema_id' => $idTema,
-                    'meta_id'=>$idMetadato,
+
                 ]);
+            $idOA = DB::table('objetos_aprendizaje')->max('id');
+
+            for ($i = 0; $i < count($urls); $i++) {
+                $saveMetadato = DB::table('metadatos')
+                    ->insert([
+                        'ruta' => $urls[$i],
+                        'oa_id' => $idOA
+                    ]);
+            }
         }
 
     }
