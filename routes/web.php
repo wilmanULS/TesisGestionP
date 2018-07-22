@@ -40,6 +40,7 @@ Route::get('/Docente/competencias/delete','competenciaController@deleteCompetenc
 //ruta edit ajax
 
 Route::get('/Academico/edit/update','UserController@actualizar')->name('Academico.update');
+Route::get('/Academico/edit/{doc}','UserController@Edit');
 Route::get('/Asignatura/delete','docenteAsignaturaController@delete')->name('Asignatura.delete');
 Route::get('Docente/funciones/contenido/{idM}','docenteController@definirContenido')->name('Docente.Fcontenido');
 
@@ -67,6 +68,23 @@ Route::get('/Docente/Indextemas/ingresarOA','planController@indexTemas');
 Route::get('/Docente/verTemas/temas/{id}','planController@getTemas');
 Route::get('/Docente/verTemas/','planController@getContenido')->name('Docente.temas');
 Route::get('/Docente/verTemas/view','planController@getAllTemas')->name('Docente.verTemas');
+
+//routes planificacion
+
+Route::get('/Docente/planificacionCurso/temas','planController@vistaPlanificacionCurso');
+Route::get('/Docente/planificacionCurso/','planController@getContenido')->name('Docente.PlanCurso');
+Route::get('/Docente/planificacionCurso/view','planController@getAllTemas')->name('Docente.verPlanCurso');
+
+//----
+
+Route::get('/Docente/contenidoCompetencias','docenteController@index');
+
+//--routes Antecesores y despuesesores
+
+Route::get('/Docente/planificacionCurso/AntSuc','planController@getAntecesores')->name('Docente.Ant');
+Route::post('/Docente/planificacionCurso/saveAB','planController@saveAB')->name('Docente.saveAB');
+
+
 
 Route::resource('Academico/designarAsignatura','docenteAsignaturaController');
 Route::resource('/create','UserController');

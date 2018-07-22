@@ -15,10 +15,10 @@
                 <label for="name">Docente</label>
                 <select name='iddocentes' class="form-control" id="idDocente">
                     @foreach($catDocentes as $docentes)
-                        @if($docentes->id==$busqueda->user_id)
-                            <option value='{{$docentes->id}}' selected>{{$docentes->name}}</option>
+                        @if($docentes['id']==$busqueda->user_id)
+                            <option value='{{$docentes['id']}}' selected>{{$docentes['name']}}</option>
                         @else
-                            <option value='{{$docentes->id}}'>{{$docentes->name}}</option>
+                            <option value='{{$docentes['id']}}'>{{$docentes['name']}}</option>
                         @endif
                     @endforeach
                 </select>
@@ -53,9 +53,9 @@
             </div>
             <div class="form-group col-md-12">
 
-                <label for="name">Fecha de Inicio</label>
+                <label for="name">Periodo</label>
                 <input required type="date" class="form-control" name="fecha_ini"
-                       value="{{$busqueda->desg_fecha_inicio}}" id="fecha_ini">
+                       value="{{$busqueda->desg_fecha_inicio}}" id="periodo">
             </div>
             <div class="form-group col-md-12">
 
@@ -104,7 +104,7 @@
             var id = $(this).attr('id');
             var idDocente = $('#idDocente').val();
             var idAsignatura = $('#asignatura').val();
-            var fecha_ini = $('#fecha_ini').val();
+            var periodo = $('#periodo').val();
             var fecha_fin = $('#fecha_fin').val();
             var token = $('token').val();
             $.ajax({
@@ -114,8 +114,8 @@
                     id: id,
                     idDocente: idDocente,
                     idAsignatura: idAsignatura,
-                    fecha_ini: fecha_ini,
-                    fecha_fin: fecha_fin,
+                    periodo: periodo,
+
                     token: token
 
                 }, success: function (msg) {

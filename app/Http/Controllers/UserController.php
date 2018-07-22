@@ -48,7 +48,7 @@ class UserController extends Controller
             ->get();
 
         $periodos=DB::table('periodo_academico')
-            ->select('id','estado','periodo')
+            ->select('id','estado','name')
             ->distinct()
             ->get();
 
@@ -103,8 +103,8 @@ class UserController extends Controller
             $array = $docenteModelo->attributesToArray();
             $asigID = $array['asig_id'];
             ///
-            $fechaInicio = $request->get('fecha_ini');
-            $fechaFin = $request->get('fecha_fin');
+            $periodo = $request->get('periodo');
+
             $asigNID = $request->get('idAsignatura');
 
             $asignatura = DB::table('t_cat_asignatura')
@@ -115,8 +115,8 @@ class UserController extends Controller
                 ->update(['as_estado' => 0]);
 
             $resultado = DB::table('t_docente_asignaturas')->where('dasg_id', '=', $id)
-                ->update(['dasg_fecha_inicio' => $fechaInicio,
-                    'dasg_fecha_fin' => $fechaFin,
+                ->update(['id_periodo' => $periodo,
+
                     'asig_id' => $asigNID]);
 
         }

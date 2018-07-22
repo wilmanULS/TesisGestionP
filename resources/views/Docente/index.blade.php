@@ -1,10 +1,10 @@
 @extends('backpack::layout')
-@section('header')
+
 @section('header')
     <h1 class="content-header">
         <i class=""></i>Mis Asignaturas
     </h1>
-@stop
+@endsection
 
 @section('content')
     <div class="page-content container-fluid">
@@ -57,33 +57,17 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 @section('scripts')
     <script>
 
-
-        {{--$(".edit").on('click', function () {--}}
-        {{--var id = $(this).attr('id');--}}
-        {{--console.log(id);--}}
-        {{--$.ajax({--}}
-        {{--url: "{{route('Docente.Fcontenido')}}",--}}
-        {{--method: "get",--}}
-        {{--data: {--}}
-        {{--idM: id--}}
-        {{--}, success: function (msg) {--}}
-        {{--alert("Se ha realizado el POST con exito " );--}}
-        {{--location.href = '/Docente/funciones/contenido';--}}
-        {{--}--}}
-        {{--});--}}
-
-        {{--});--}}
 
 
 
     </script>
 
 
-@stop
+@endsection
 
 
 

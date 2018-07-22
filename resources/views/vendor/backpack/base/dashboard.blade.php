@@ -3,7 +3,7 @@
 @section('header')
     <section class="content-header">
         <h1>
-            Bienvenido<small>Agente de Gestión y Planificación</small>
+            Bienvenido <small>Agente de Gestión y Planificación</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ backpack_url() }}">{{ config('backpack.base.project_name') }}</a></li>

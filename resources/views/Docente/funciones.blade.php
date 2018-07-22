@@ -101,6 +101,7 @@
             //añadido dnamico
 
 // Crear un elemento div añadiendo estilos CSS
+
             var container = $(document.getElementById('competencias'));
 
             $('#btAdd').click(function () {
@@ -149,98 +150,32 @@
                     $('#btAdd').attr('class', 'bt-disable');
                     $('#btAdd').attr('disabled', 'disabled');
 
-                }
-            });
+                    }
+        });
 
-            $('#btRemove').click(function () {   // Elimina un elemento por click
-                if (CP != 0) {
-                    $('#CP' + CP).remove();
-                    CP = CP - 1;
-                }
-                if (CP == 0) {
-                    alert('Minimo una Competencia')
-                }
+        $('#btRemove').click(function () {   // Elimina un elemento por click
+            if (CP != 0) {
+                $('#CP' + CP).remove();
+                CP = CP - 1;
+            }
+            if (CP == 0) {
+                alert('Minimo una Competencia')
+            }
 
-            });
-
-
-            //
-            $('#dificultad').change(function () {
-                if ($(this).val() != '') {
-                    console.log("hmm its change");
-
-                    var dificultad = $('#dificultad').val();
-                    var token = $('token').val();
-
-                    $.ajax({
-                        type: "get",
-                        url: "{{ route('Docente.descripcion') }}",
-                        data: {
-                            dificultad: dificultad,
-                            token: token
-
-                        }, success: function (data) {
-                            console.log('success');
-
-                            console.log(data);
-
-                            //console.log(data.length);
-                            $('#nivelC').empty();
-                            for (var i = 0; i < data.length; i++) {
-                                $('#nivelC').append('<option value="' + data[i].id + '">' + data[i].descripcionNC + '</option>');
-
-                            }
+        });
 
 
-                        }
+        //
+        $('#dificultad').change(function () {
+            if ($(this).val() != '') {
+                console.log("hmm its change");
 
-
-                    });
-
-                }
-            });
-
-            //ajax para taxonomia bloom
-            $('#nivelC').change(function () {
-                if ($(this).val() != '') {
-                    console.log("hmm its change taxonomia");
-
-                    var idNivelC = $('#nivelC').val();
-                    var token = $('token').val();
-                    $.ajax({
-                        type: "get",
-                        url: "{{ route('Docente.verboTaxonomia') }}",
-                        data: {
-                            nivelC: idNivelC,
-                            token: token
-
-                        }, success: function (data) {
-                            console.log('success');
-
-                            console.log(data);
-
-                            console.log(data.length);
-                            $('#taxonomia').empty();
-                            for (var i = 0; i < data.length; i++) {
-                                $('#taxonomia').append('<option value="' + data[i].id + '">' + data[i].verbo + '</option>');
-
-                            }
-
-
-                        }
-
-
-                    });
-
-                }
-            });
-
-//nombre
-            function getNombre() {
+                var dificultad = $('#dificultad').val();
+                var token = $('#token').val();
 
                 $.ajax({
                     type: "get",
-                    url: "{{ route('Materia.descripcion') }}",
+                    url: "{{ route('Docente.descripcion') }}",
                     data: {
                         dificultad: dificultad,
                         token: token
@@ -250,9 +185,84 @@
 
                         console.log(data);
 
+                        //console.log(data.length);
+                        $('#nivelC').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $('#nivelC').append('<option value="' + data[i].id + '">' + data[i].descripcionNC + '</option>');
+
+                        }
+
+
                     }
+
+
                 });
+
             }
+        });
+
+        //ajax para taxonomia bloom
+        $('#nivelC').change(function () {
+            if ($(this).val() != '') {
+                console.log("hmm its change taxonomia");
+
+                var idNivelC = $('#nivelC').val();
+                var token = $('#token').val();
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('Docente.verboTaxonomia') }}",
+                    data: {
+                        nivelC: idNivelC,
+                        token: token
+
+                    }, success: function (data) {
+                        console.log('success');
+
+                        console.log(data);
+
+                        console.log(data.length);
+                        $('#taxonomia').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $('#taxonomia').append('<option value="' + data[i].id + '">' + data[i].verbo + '</option>');
+
+                        }
+
+
+                    }
+
+
+                });
+
+            }
+        });
+
+//nombre
+        function getNombre() {
+
+            $.ajax({
+                type: "get",
+                url: "{{ route('Materia.descripcion') }}",
+                data: {
+                    dificultad: dificultad,
+                    token: token
+
+                }, success: function (data) {
+                    console.log('success');
+
+                    console.log(data);
+
+
+                }
+            });
+}
+      
+
+
+         
+
+           
+//nombre
+         
 
 
 //n1
@@ -409,6 +419,6 @@
             });
             //
         });
-    </script>loca
+    </script>
 @endsection
 

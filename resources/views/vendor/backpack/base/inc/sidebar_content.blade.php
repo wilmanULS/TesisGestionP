@@ -36,7 +36,7 @@
 
   <!-- DOCENTE MENÚ-->
 @can('Mis Asignaturas')
-  <li><a href="{{ url('/Docente/index') }}"><i class="fa fa-desktop"></i> <span>Mis Asignaturas</span></a></li>
+  <li><a href="{{ url('/Docente/contenidoCompetencias') }}"><i class="fa fa-desktop"></i> <span>Mis Asignaturas</span></a></li>
   @endcan
 @can('Competencias')
   <li><a href="{{ url('/Docente/competencias') }}"><i class="fa fa-lightbulb-o"></i> <span>Competencias</span></a></li>
@@ -61,9 +61,16 @@
 
 @endcan
 
+@can('Planificacion Curso')
+
+  <li><a href="{{ url('/Docente/planificacionCurso/temas') }}"><i class="fa fa-archive"></i> <span>Planificación Curso</span></a></li>
+
+@endcan
+
+@can('Seguimiento Curricular')
 
 
-
+@endcan
 
 
 
