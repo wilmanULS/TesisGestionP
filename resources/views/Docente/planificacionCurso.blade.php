@@ -63,13 +63,13 @@
 
                             <div class="modal-body">
                                 <label for="name">Seleccione Antesesor</label>
-                                <select name='contenido' class="form-control" id="antesesor">
+                                <select  class="form-control sel"  id="antesesor">
 
                                     <option value='Seleccionar'>Seleccionar</option>
                                 </select>
 
                                 <label for="name">Seleccione Sucesor</label>
-                                <select name='contenido' class="form-control" id="sucesor">
+                                <select  class="form-control sel" id="sucesor">
 
                                     <option value='Seleccionar'>Seleccionar</option>
                                 </select>
@@ -77,8 +77,10 @@
 
                             <!-- footer-->
                             <div class="modal-footer">
-                                <button tyle="button" class="btn btn-primary">Guardar</button>
-                                <button tyle="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                                <a class="btn btn-sm btn-primary saveAB" >Guardar</a>
+                                <a class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</a>
+
                             </div>
 
                         </div>
@@ -96,12 +98,14 @@
 
 
 
-@stop
+@endsection
 @section('scripts')
     <script>
         semanaContenido();
-
         TemasContenido();
+        controlTemasAfterBefore();
+        saveAfterBefore();
+
 
         function semanaContenido () {
 
@@ -110,7 +114,7 @@
 
 
                     var semanas = $('#semanas').val();
-                    var token = $('token').val();
+                    var token = $('#token').val();
 
                     $.ajax({
                         type: "get",
@@ -128,15 +132,10 @@
                             $('#contenido').empty();
                             $('#contenido').append('<option value="">' + ' Seleccionar' + '</option>');
 
-                            $('#antesesor').empty();
-                            $('#antesesor').append('<option value="">' + ' Seleccionar' + '</option>');
-
-                            $('#sucesor').empty();
-                            $('#sucesor').append('<option value="">' + ' Seleccionar' + '</option>');
+                           
                             for (var i = 0; i < data.length; i++) {
                                 $('#contenido').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
-                                $('#antesesor').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
-                                $('#sucesor').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
+
 
                             }
 
@@ -157,7 +156,7 @@
 
 
                     var contenido = $('#contenido').val();
-                    var token = $('token').val();
+                    var token = $('#token').val();
 
                     $.ajax({
                         type: "get",
@@ -173,6 +172,8 @@
                             //console.log(data.length);
 
                             $('#tablavista').empty();
+
+
                             var content = "<table id='Asignados' class='table table-striped database-tables'>";
                             content +="<thead>" +
                                 "                        <tr>" +
@@ -184,7 +185,7 @@
                                 "                        </thead>";
                             for(i=0; i<data.length; i++){
                                 content += '<tr><td>' + data[i].tema + '</td>' +
-                                    '<td><a href="#ventana1" class="btn btn-sm btn-primary btn-lg" data-toggle="modal">Añadir</a>'
+                                    '<td><a href="#ventana1" id="'+data[i].id+'" class="btn btn-sm btn-primary btn-lg add" data-target="#ventana1" data-toggle="modal">Añadir</a>'
                                 '</tr>';
                             }
                             content += "</table>"
@@ -201,8 +202,77 @@
             });
         }
 
+        function controlTemasAfterBefore(){
+            $(document).on('click', '.add', function () {
 
+                var idTema = $(this).attr('id');
+                var contenido = $('#contenido').val();
+                var token = $('#token').val();
+                console.log(idTema);
+
+                $.ajax({
+
+                    type:"get",
+                    url: "{{ route('Docente.Ant') }}",
+                    data: {
+                        contenido:contenido,
+                        idTema: idTema,
+                        token: token
+
+                    }, success: function (data){
+                        console.log('temas');
+                        console.log(data);
+                        $('#antesesor').empty();
+                        $('#antesesor').append('<option value="Seleccionar">' + ' Seleccionar' + '</option>');
+                        $('#antesesor').append('<option value="Ninguno">' + ' Ninguno' + '</option>');
+
+                        $('#sucesor').empty();
+                        $('#sucesor').append('<option value="Seleccionar">' + ' Seleccionar' + '</option>');
+                        $('#sucesor').append('<option value="Ninguno">' + ' Ninguno' + '</option>');
+                        for(i=0; i<data.length; i++) {
+                            $('#antesesor').append('<option class="sel" value="' + data[i].tema + '">' + data[i].tema + '</option>');
+                            $('#sucesor').append('<option class="sel" value="' + data[i].tema + '">' + data[i].tema + '</option>');
+                        }
+                    }
+
+
+
+                });
+
+
+
+            });
+        }
+
+        function saveAfterBefore(){
+            $(document).on('click', '.saveAB', function () {
+
+                var idTema = document.getElementsByClassName('add')[0].id;
+                var antesesor=$('#antesesor').val();
+                var sucesor=$('#sucesor').val();
+                var token = $('#token').val();
+
+                if(antesesor === sucesor)
+                {
+                    alert("Tema antecesor y sucesor iguales, realize un cambio");
+                }
+                else
+                {
+                    $.ajax({
+                        type:"post",
+                        url:"{{ route('Docente.saveAB')}}",
+                        data:{
+                            antesesor:antesesor,
+                            sucesor:sucesor,
+                            idTema:idTema,
+                            token:token
+                        }, success: function (){
+
+                            alert('almacenado exitosamente');
+                        }
+                    });
+                }
+            });
+        }
     </script>
-
-
-@stop
+@endsection

@@ -30,7 +30,7 @@ class docenteController extends Controller
 
 
 
-            return view('Docente.index', ["consulta_docentes" => $consulta_docentes]);
+            return view('Docente.contenidoCompetencias', ["consulta_docentes" => $consulta_docentes]);
         }
     }
 

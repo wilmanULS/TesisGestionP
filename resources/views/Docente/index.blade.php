@@ -62,22 +62,6 @@
     <script>
 
 
-        {{--$(".edit").on('click', function () {--}}
-        {{--var id = $(this).attr('id');--}}
-        {{--console.log(id);--}}
-        {{--$.ajax({--}}
-        {{--url: "{{route('Docente.Fcontenido')}}",--}}
-        {{--method: "get",--}}
-        {{--data: {--}}
-        {{--idM: id--}}
-        {{--}, success: function (msg) {--}}
-        {{--alert("Se ha realizado el POST con exito " );--}}
-        {{--location.href = '/Docente/funciones/contenido';--}}
-        {{--}--}}
-        {{--});--}}
-
-        {{--});--}}
-
 
 
     </script>

@@ -95,7 +95,7 @@
         var dificult = $('#dificult').val();
         var idTax = $('#idTax').val();
         var idNC = $('#idNC').val();
-        var tok = $('token').val();
+        var tok = $('#token').val();
         $("#dificultad option[value=" + dificult + "]").attr("selected", true);
         cargarNC();
         cargarVerbo();
@@ -153,7 +153,7 @@
             if ($(this).val() != '') {
 
                 var dificultad = $('#dificultad').val();
-                var token = $('token').val();
+                var token = $('#token').val();
 
                 $.ajax({
                     type: "get",
@@ -187,7 +187,7 @@
                 console.log("hmm its change taxonomia");
 
                 var idNivelC = $('#nivelC').val();
-                var token = $('token').val();
+                var token = $('#token').val();
                 $.ajax({
                     type: "get",
                     url: "{{ route('Docente.verboTaxonomia') }}",

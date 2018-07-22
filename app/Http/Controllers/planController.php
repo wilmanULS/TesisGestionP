@@ -102,10 +102,71 @@ class planController extends Controller
         $idContenido=$request->get('contenido');
         $temas=DB::table('temas')
             ->join('contenidos','contenidos.id','=','temas.id_contenido')
+            ->select('contenidos.id as id_contenido','temas.id','temas.tema')
+            ->where('temas.id_contenido','=',''.$idContenido.'')
+            ->get();
+
+        $nuevo=array();
+
+        foreach ($temas as $valor)
+        {
+            $n=$valor->id;
+            $findAntecesor=DB::table('antecesor')
+                ->select('id','tema_id')
+                ->where('tema_id','=',''.$n.'')
+                ->get();
+
+            $findSucesor=DB::table('sucesor')
+                ->select('id','tema_id')
+                ->where('tema_id','=',''.$n.'')
+                ->get();
+
+
+            if(!empty($findAntecesor) || !empty($findSucesor)){
+                $comp=true;
+            }else{
+                $comp=false;
+            }
+
+            $aux=["id"=>$n,"tema"=>$valor->tema,"bloqueo"=>$comp];
+            array_push($nuevo,$aux);
+
+        }
+
+
+
+
+
+
+
+
+
+        return response()->json($nuevo);
+
+    }
+
+    public function controlTemas(Request $request){
+
+        $idContenido=$request->get('contenido');
+        $temas=DB::table('temas')
+            ->join('contenidos','contenidos.id','=','temas.id_contenido')
             ->select('contenidos.id','temas.id','temas.tema')
             ->where('temas.id_contenido','=',''.$idContenido.'')
             ->get();
 
+
+
+
+        return response()->json($temas);
+
+    }
+
+    public function getAntecesores(Request $request){
+
+        $idContenido=$request->get('contenido');
+        $idTema=$request->get('idTema');
+
+        $temas=DB::select('CALL p_TemasAfterBefore('.$idContenido.','.$idTema.')');
         return response()->json($temas);
 
     }
@@ -211,5 +272,30 @@ class planController extends Controller
 
 
 
+    }
+
+    public function saveAB(Request $request){
+        if ($request->isMethod('post')) {
+
+            $antesesor = $request->input('antesesor');
+            $sucesor = $request->input('sucesor');
+            $idTema=$request->input('idTema');
+
+            $saveAntecesor=DB::table('antecesor')->insert([
+                'tema_id'=>$idTema,
+                'antecesor'=>$antesesor,
+                'estado'=>1
+
+            ]);
+
+            $saveSucesor=DB::table('sucesor')->insert([
+                'tema_id'=>$idTema,
+                'sucesor'=>$sucesor,
+                'estado'=>1
+
+            ]);
+
+
+        }
     }
 }

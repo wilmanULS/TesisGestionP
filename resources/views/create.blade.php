@@ -48,7 +48,7 @@
                 <select class="form-control" id="periodo">
                     <option value='Seleccionar'>Seleccionar</option>
                     @foreach($periodos as $per)
-                        <option value='{{$per->id}}'>{{$per->periodo}}</option>
+                        <option value='{{$per->id}}'>{{$per->name}}</option>
 
                     @endforeach
                 </select>
@@ -116,7 +116,7 @@
                 var idDocente = $('#idDocente').val();
                 var idAsignatura = $('#asignatura').val();
                 var periodo=$('#periodo').val();
-                var token = $('token').val();
+                var token = $('#token').val();
 
                 $.ajax({
                     type: "post",

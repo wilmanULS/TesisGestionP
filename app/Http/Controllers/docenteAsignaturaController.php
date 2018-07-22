@@ -65,7 +65,7 @@ class docenteAsignaturaController extends Controller
             ]);
 
             $addDA = DB::table('t_docente_asignaturas')->insert([
-                'periodo' => $periodo,
+                'id_periodo' => $periodo,
                 'user_id' => $idDocente,
                 'asig_id' => $idAsignatura,
 

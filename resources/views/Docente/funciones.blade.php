@@ -170,7 +170,7 @@
                 console.log("hmm its change");
 
                 var dificultad = $('#dificultad').val();
-                var token = $('token').val();
+                var token = $('#token').val();
 
                 $.ajax({
                     type: "get",
@@ -206,7 +206,7 @@
                 console.log("hmm its change taxonomia");
 
                 var idNivelC = $('#nivelC').val();
-                var token = $('token').val();
+                var token = $('#token').val();
                 $.ajax({
                     type: "get",
                     url: "{{ route('Docente.verboTaxonomia') }}",
