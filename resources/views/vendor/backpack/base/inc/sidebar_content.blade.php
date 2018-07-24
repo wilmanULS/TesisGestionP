@@ -69,6 +69,7 @@
 
 @can('Seguimiento Curricular')
 
+  <li><a href="{{ url('/Docente/seguimiento') }}"><i class="fa fa-archive"></i> <span>Seguimiento Plan</span></a></li>
 
 @endcan
 
