@@ -26,12 +26,20 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <h3 id="text_horas_semana">Créditos semanal: <span id="number_horas_semana"></span></h3>
+            </div>
+            <div class="col-md-4">
+                <h3 id="text_semana_actual">Semana Actual: <span id="number_semana_actual"></span></h3>
+            </div>
+            <div class="col-md-4">
+                <h3 id="text_horas_restantes">Horas restantes semana: <span id="number_horas_restantes"></span></h3>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
-                    <!-- form start -->
                     <form class="form-edit-add" role="form">
-
-                        <!-- CSRF TOKEN -->
                         <div class="panel-footer">
                             <table id="seguimiento" class="table table-striped database-tables"></table>
                         </div>
@@ -54,6 +62,7 @@
     <script>
         $(function () {
             $('#asignatura').on('change', function (e) {
+                $('#seguimiento').empty();
                 getContenidos($(this).val());
             });
             $('#contenido').on('change', function (e) {
@@ -66,11 +75,20 @@
                 type: "get",
                 url: $('#action_get_contenidos').val() + '/' + asignaturaId,
                 dataType: 'json',
-                success: function (data) {
+                beforeSend: function (xhr) {
                     $('#contenido').empty();
+                    $('#number_semana_actual').empty();
+                    $('#number_horas_restantes').empty();
+                    $('#number_horas_semana').empty();
+                },
+                success: function (data) {
+                    var query = data.query;
+                    $('#number_semana_actual').html(data.semana_actual);
+                    $('#number_horas_restantes').html(data.horas_restantes);
+                    $('#number_horas_semana').html(data.horas_semana);
                     $('#contenido').append('<option value="">' + ' -- Seleccione --' + '</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        $('#contenido').append('<option value="' + data[i].id + '">' + data[i].descripcion + '</option>');
+                    for (var i = 0; i < query.length; i++) {
+                        $('#contenido').append('<option value="' + query[i].id + '">' + query[i].descripcion + '</option>');
                     }
                 }
             });
@@ -81,8 +99,10 @@
                 type: "get",
                 url: $('#action_get_planes').val() + '/' + contenidoId,
                 dataType: 'json',
-                success: function (data) {
+                beforeSend: function (xhr) {
                     $('#seguimiento').empty();
+                },
+                success: function (data) {
                     var content = "<thead>" +
                         "<tr>" +
                         "<th>Tema</th>" +

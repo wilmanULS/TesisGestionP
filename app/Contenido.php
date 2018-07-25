@@ -14,6 +14,6 @@ class Contenido extends Model
 
     public function asignatura()
     {
-        return $this->belongsTo(Asignatura::class, 'id_asignatura');
+        return $this->belongsTo(Asignatura::class, 'id_asignatura','as_id');
     }
 }
