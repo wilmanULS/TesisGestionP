@@ -70,7 +70,7 @@
             });
         });
 
-        function getContenidos(asignaturaId) {
+        function getContenidos(asignaturaId, idSet) {
             $.ajax({
                 type: "get",
                 url: $('#action_get_contenidos').val() + '/' + asignaturaId,
@@ -90,6 +90,8 @@
                     for (var i = 0; i < query.length; i++) {
                         $('#contenido').append('<option value="' + query[i].id + '">' + query[i].descripcion + '</option>');
                     }
+                    if (idSet !== undefined)
+                        $('#contenido').val(idSet).change();
                 }
             });
         }
@@ -119,7 +121,7 @@
                             '<td>' + ((parseInt(data[i].horas_asignadas) === parseInt(data[i].horas_impartidas)) ? '' : '<a onclick="getModalHoras(' + data[i].id + ')" class="btn btn-sm btn-primary pull-right edit"><i class="voyager-edit"></i>Registrar Horas</a>') +
                             '</tr>';
                     }
-                    content += "</table>"
+                    content += "</table>";
                     $('#seguimiento').html(content);
                 }
             });
@@ -148,8 +150,10 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
+                        var idContenido = $('#contenido').val();
                         $('#modal_horas').modal('hide');
-                        $('#contenido').change();
+                        // $('#contenido').change();
+                        getContenidos($('#asignatura').val(), idContenido);
                     } else {
                         alert(data.message);
                     }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Asignatura;
+use App\Contenido;
 use App\Plan;
 use App\Seguimiento;
+use App\Tema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +30,11 @@ class seguimientoController extends Controller
 
     public function getContenidosByAsignatura($asignaturaId = null)
     {
-        $modelAsignatura = Asignatura::where('as_id',$asignaturaId)->first();
+        $modelAsignatura = Asignatura::where('as_id', $asignaturaId)->first();
         $query = DB::table('contenidos as c')
-            ->select('c.id', DB::raw('concat(c.descripcion," (semana ",c.semana,")") as descripcion'))
-            ->where('c.id_asignatura', '=', $asignaturaId)->get()->toArray();
+            ->select('c.id',
+                DB::raw('concat(concat(c.descripcion," (semana ",c.semana,")"),if(c.estado="' . Contenido::ESTADO_COMPLETO . '"," (impartido)","")) as descripcion'))
+            ->where('c.id_asignatura', '=', $asignaturaId)->orderBy('c.semana')->get()->toArray();
         //get semana actual
         $queryLastSeguimiento = DB::table('seguimiento as se')
             ->select('se.id', 'se.horas_restantes', 'se.semana_actual')
@@ -41,7 +44,12 @@ class seguimientoController extends Controller
             ->where('co.id_asignatura', $asignaturaId)
             ->orderBy('se.fecha_creacion', 'desc')->first();
         if ($queryLastSeguimiento) {
-            $horasRestantes = $queryLastSeguimiento->horas_restantes;
+            if ((int)$queryLastSeguimiento->horas_restantes === 0) {
+                $queryLastSeguimiento->semana_actual += 1;
+                $horasRestantes = $modelAsignatura->as_num_credito;
+            } else {
+                $horasRestantes = $queryLastSeguimiento->horas_restantes;
+            }
         } else {
             $horasRestantes = $modelAsignatura->as_num_credito;
         }
@@ -114,6 +122,18 @@ class seguimientoController extends Controller
                             $model->fecha_creacion = date('Y-m-d H:i:s');
                             $model->plan_id = $planId;
                             $model->save();
+                            //actualizar estado del tema si horas restantes=0
+                            if ($horasRestantes - (int)$input['n_horas'] === 0) {
+                                $modelTema = $modelPlan->tema;
+                                $modelTema->estado = Contenido::ESTADO_COMPLETO;
+                                $modelTema->save();
+                            }
+                            //actualizar estado del contenido si horas restantes=0
+                            $modelTemasIncompletos = Tema::where('id_contenido', $modelContenido->id)->where('estado', '<>', Contenido::ESTADO_COMPLETO)->first();
+                            if (!$modelTemasIncompletos) {
+                                $modelContenido->estado = Contenido::ESTADO_COMPLETO;
+                                $modelContenido->save();
+                            }
                             $result['success'] = true;
                         } else {
                             $result['success'] = false;
