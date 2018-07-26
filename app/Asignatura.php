@@ -22,6 +22,7 @@ class Asignatura extends Model
             ->get();
 
     }
+
     public static function asignatureID($id)
     {
 

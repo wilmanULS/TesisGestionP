@@ -10,5 +10,11 @@ class Tema extends Model
     protected $table = "temas";
     public $timestamps = false;
     protected $primary_key = 'id';
-    protected $filename = ['id','tema','id_contenido','prioridad','estado','precendetes','sucedentes'];
+    protected $filename = ['id', 'tema', 'id_contenido', 'prioridad', 'estado', 'precendetes', 'sucedentes'];
+
+    public function contenido()
+    {
+        return $this->belongsTo(Contenido::class, 'id_contenido');
+    }
+
 }

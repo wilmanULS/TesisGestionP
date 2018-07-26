@@ -96,3 +96,9 @@ Route::resource('Docente/funciones','competenciaController ');
 //routes objetos de Aprendizaje
 Route::get('Repositorio/ingresarOA/{id}','ObjetoController@index');
 
+//routes seguimiento
+Route::get('/Docente/seguimiento','seguimientoController@index');
+Route::get('/Docente/getContenidosByAsignatura/{asignaturaId?}','seguimientoController@getContenidosByAsignatura');
+Route::get('/Docente/getPlanesByContenido/{contenidoId?}','seguimientoController@getPlanesByContenido');
+Route::get('/Docente/getFormRegistrarHoras/{planId?}','seguimientoController@getFormRegistrarHoras');
+Route::post('/Docente/saveFormRegistrarHoras/{planId?}','seguimientoController@postSaveFormRegistrarHoras');
